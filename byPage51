@@ -1,0 +1,106 @@
+#base 10이하
+def convert_from_decimal(number,base):
+    multiplier, result = 1,0
+    while number >0:
+        result += number%base *multiplier
+        multiplier *=10 #첫번쨰, 두번째 자리수 증가
+        number = number // base #몫을 저장(%는 나머지 저장-> then, 1,0으로 전환)
+        print(number) # 진법 
+    return result
+
+convert_from_decimal(10,2)
+
+#base 10이상 => 문자 부호로 표현됨 A,B,C
+
+def convert_from_decimal(number,base):
+    strings = '0123456789ABCDEFGHIJ'
+    result = ""
+    
+    while number> 0:
+        digit = number % base
+        result = strings[digit] + result
+        number = number // base 
+    return result
+
+convert_from_decimal(1000,16)
+
+#재귀함수 
+
+def convert_dec_to_any_base_rec(number,base):
+    convertString = '0123456789ABCDEF'
+    if number < base:
+        print(number,base)
+        return convertString[number]
+    else:
+        return convert_dec_to_any_base_rec(number//base,base)\
+                +convertString[number%base]
+            
+
+convert_dec_to_any_base_rec(20,16)
+
+# 피보나치 수열
+import math 
+
+def find_fibonacci_seq_iter(n):
+    if n < 2: return n
+    a,b = 0,1 
+    for i in range(n):
+        a,b, = b, a+b
+    return a
+
+find_fibonacci_seq_iter(10)
+
+def find_fibonacci_seq_rec1(n):
+    if n<2: return n
+    return find_fibonacci_seq_rec1(n-1)+find_fibonacci_seq_rec1(n-2)
+
+find_fibonacci_seq_rec(3)
+
+'''
+실행 과정
+3- > def(2)  + def(1) -> 1+0+1  = 2
+def(2)-> def(1)+def(0) -> 1+0
+def(1) - > 1
+'''
+
+fib_generator()x
+
+# 소수 check
+
+import math 
+import random
+
+def finding_prime(number):
+    num = abs(number)
+    if num < 4: return True
+    for x in range(2,num):
+        if num % x ==0:
+            return False
+        return True
+
+# 내장 시퀀스 타입
+
+# splitlines(): 줄 바꿈 기준을 통해, 리스트로 전환
+slayers = "로미오\n줄리엣\n미녀\n야수"
+slayers.splitlines()
+
+counts = {'chuck':1, 'fred':42, 'jan':100}
+names = ['adb', 'dgs', 'adb', 'zfsfe', 'adb']
+for name in names:
+    counts[name] = counts.get(name, 0) + 1 
+    #get메소드를 이용하여 키값이 있을 경우 키에 대한 값을 불러오고 없을 경우 기본값을 갖는 데이터 추가
+    #get메소드는 해당 키에 대한 값을 가져온다.
+print(counts)
+
+'''
+딕셔너리 안에 찾으려는 Key 값이 없을 경우 미리 정해 둔 디폴트 값을 대신 가져오게 하고 싶을 때에는 get(x, '디폴트 값')을 사용하면 편리하다.
+
+>>> a.get('foo', 'bar')
+'bar'
+'''
+
+for i in counts:
+    print(i)
+    if i in names:
+        print("TRUE")
+    else:print("FALSE")
