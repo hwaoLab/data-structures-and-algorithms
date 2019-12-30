@@ -94,3 +94,57 @@ class Analysis():
         # 모델 평가
     def evaluate_model(self, model, x_test, t_test):
         return model.evaluate(x_test, t_test)
+ analysis = Analysis()
+
+data = analysis.create_dataset(20000)
+print(data[0 : 5])
+
+analysis.plot_data(data)
+
+target = analysis.classify_data(data)
+print(target[0 : 7])
+print(data[0:7])
+
+print(len(target[target=='type0']))
+print(len(target[target=='type1']))
+print(len(target[target=='type2']))
+print(len(target[target=='type3']))
+print(len(target[target=='type4']))
+print(len(target[target=='type5']))
+print(len(target[target=='type6']))
+print(len(target[target=='type7']))
+
+
+plt.figure(figsize=(7, 7))
+plt.plot(data[:,0][target == 'type0'],data[:,1][target == 'type0'], 'k.')
+plt.plot(data[:,0][target == 'type1'],data[:,1][target == 'type1'], 'b.')
+plt.plot(data[:,0][target == 'type2'],data[:,1][target == 'type2'], 'r.')
+plt.plot(data[:,0][target == 'type3'],data[:,1][target == 'type3'], 'g.')
+plt.plot(data[:,0][target == 'type4'],data[:,1][target == 'type4'], 'c.')
+plt.plot(data[:,0][target == 'type5'],data[:,1][target == 'type5'], 'm.')
+plt.plot(data[:,0][target == 'type6'],data[:,1][target == 'type6'], 'y.')
+plt.plot(data[:,0][target == 'type7'],data[:,1][target == 'type7'], 'k.')
+
+
+plt.xlabel('x1')
+plt.ylabel('x2')
+plt.grid(True)
+
+plt.show()
+
+encoded_target = analysis.encode_data(target)
+print(encoded_target[0:10])
+
+(x_train, x_test) = analysis.get_train_And_test(data, 80)
+print(x_train[0 : 4])
+(t_train, t_test) = analysis.get_train_And_test(encoded_target, 80)
+print(t_train[0 : 4])
+
+
+(model, hist) = analysis.create_model(x_train, t_train, 10, 16)
+
+analysis.plot_history(hist)
+
+analysis.evaluate_model(model, x_test, t_test)
+
+
