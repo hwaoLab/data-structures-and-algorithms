@@ -1,0 +1,96 @@
+import numpy as np
+import pandas as pd
+from keras.layers import Dense, Dropout
+from keras.models import Sequential
+from sklearn.preprocessing import LabelBinarizer
+import matplotlib.pyplot as plt
+import tensorflow as tf
+%matplotlib inline
+
+class Analysis():
+    def __init__(self):
+        np.random.seed(12341324)
+        
+        #데이터 셋 생성
+    def create_dataset(self, num = 5000):
+        if num % 2 == 1:
+            return None
+        data_len = int(num / 2)
+        return np.random.random(num).reshape(data_len , 2)
+        
+        # 데이터 플로팅
+    def plot_data(self, data):
+        if len(data.shape) != 2 :
+            print('데이터를 확인해주세요.')
+            return
+        plt.figure(figsize=(7, 7))
+        plt.plot(data[:, 0], data[:, 1], 'b.')
+        plt.xlabel('x1')
+        plt.ylabel('x2')
+        plt.grid(True)
+        plt.show()
+        
+        # 데이터 분류
+    def classify_data(self, data):
+        target = []
+        for i in range(len(data)):
+            if data[i, 0] < 0.5 and data[i, 1] < 0.5:
+                if data[i,0] > data[i,1]:
+                    target.append('type0')
+                else:
+                    target.append('type1')
+            elif data[i, 0] >= 0.5 and data[i, 1] < 0.5:
+                if -data[i,0]+1 >  data[i,1]:
+                    target.append('type2')
+                else:
+                    target.append('type3')
+            elif data[i, 0] < 0.5 and data[i, 1] >= 0.5:
+                if  -data[i,0] +1 > data[i,1]:
+                    target.append('type4')
+                else:
+                    target.append('type5')
+            elif data[i, 0] >= 0.5 and data[i, 1] >= 0.5:
+                if data[i,0] > data[i,1]:
+                    target.append('type6')
+                else:
+                    target.append('type7')
+            
+        return np.array(target)
+    
+        # 데이터 인코딩
+    def encode_data(self, target):
+        encoder = LabelBinarizer()
+        target = encoder.fit_transform(target)
+        return target
+        
+        # percent를 이용한 train test 데이터 구분
+    def get_train_And_test(self, data, percent = 80):
+        if percent > 100 :
+            print('파라미터를 확인해주세요')
+            return 
+        criteria = int((len(data) * percent) / 100)
+        print('기준 ', criteria)
+        return (data[0 : criteria], data[criteria : ])
+    
+        # 모델 생성
+    def create_model(self, x_train, t_train, epoch_num = 60, batch_num = 16):
+        model = Sequential()
+        model.add(Dense(16, input_dim = 2, activation = 'sigmoid' ))
+        model.add(Dense(16, activation = 'sigmoid' ))
+        model.add(Dense(8, activation = 'softmax'))
+        model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
+        hist = model.fit(x_train, t_train, epochs = epoch_num, batch_size = batch_num)
+        return (model, hist)
+    
+        # history 플로팅
+    def plot_history(self, hist):
+        plt.figure(figsize = (15, 5))
+        plt.plot(hist.history['loss'], 'y', label = 'loss')
+        plt.plot(hist.history['accuracy'], 'b', label = 'acc')
+        plt.xlabel('epoch')
+        plt.legend(loc = 'best')
+        plt.show()
+        
+        # 모델 평가
+    def evaluate_model(self, model, x_test, t_test):
+        return model.evaluate(x_test, t_test)
