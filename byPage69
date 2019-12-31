@@ -1,0 +1,77 @@
+slayers = '버피* 크리스마스-메리 *  16'
+fields = slayers.split('*')
+
+fields
+
+fields[:2]
+
+fields = fields +fields[1].split('-')
+
+slayers = "Buffy and Faith"
+print(slayers.find("f"), slayers.find("g"))
+print(slayers.index("f"))
+#print(slayers.index("g")) 
+# finde는 없을 경우, -1반환, index는 value error
+
+slayers = "Buffy and Faith fff"
+print(slayers.count("f",0,-1),slayers.count("f",0,3)) # 0~3 인덱스 범위에서 (경계에 속하는 값은 체크 안함)
+
+sample = "그의 이름은 {name}, 학번은 {number}입니다."
+
+sample.format(name= "hwao",number= 123)
+
+# f- strings
+
+name= '프레드'
+seq = f"그의 이름은 {name!r} 입니다."
+print(seq)
+
+from datetime import datetime
+today = datetime(year=2019,month=12,day=31)
+print(f"{today:%B ,%d, %Y}")  #format과 다르게 연산을 집어 넣을 수 있다.
+
+a=2
+b=3
+test = f'sum:{a+b}'
+print(test)
+
+#튜플 언패킹
+first,*rest = (1,2,3,4)
+print(first,rest)
+print(type(rest))
+#리스트 언패킹
+first,*rest = [1,2,3,4,5]
+print(first)
+
+people = ['버피','제임스']
+people.extend("자일스")
+people
+
+import numpy as np 
+people = ['버피','제임스','자일스']
+people = np.array(people)
+bool_list = [True ,False, True]
+bool_list = np.array(bool_list)
+print(people[bool_list]) # list맒고 array는 인덱스 값은 true, false로 추출할 수 도 있다. 
+
+# 리스트 컴프리 헨션
+#
+a = [y for y in range(1900,1940) if y%4 == 0]
+print(a)
+b = [2**i for i in range(13)]
+print(b)
+c = [x for x in a if x%3 ==0]
+print(c)
+
+d = [str(round(355/133.0,i)) for i in range(1,6)] 
+print(355/133,round(355/133.0,2))
+
+result = [(x,y) for x in range(10) for y in range(5) if x*y >10 ]
+print(result)
+
+result1 =[]
+for x in range(10):
+    for y in range(5):
+        if x*y>10:
+            result1.append((x,y))
+print(result==result1)
