@@ -1,0 +1,85 @@
+#셋 -> 중복항목 제거및 멤버십 테스트에서 사용
+def remove_dup(l1):
+    return list(set(l1)) # 셋은 중복 요소가 없기 때문에, 자동으로 중복 삭제 
+l1 = [1,2,3,4,5,5,6,7,7,7,8,9]
+
+print(remove_dup(l1))
+
+def interation(l1,l2):
+    return list(set(l1) & set(l2)) # &은 set에서 intersaction 
+
+l1 = [1,2,3,4,5,5,9,11,11,15]
+l2 = [4,5,6,7,8]
+print(interation(l1,l2))
+
+def union(l1,l2):
+    return list(set(l1) |set(l2)) # |은 합집합
+print(union(l1,l2))
+
+def test_sets_operations_with_lists():
+    l1 = [1,2,3,4,5,5,9,11,11,15]
+    l2 = [4,5,6,7,8]
+    l3 = []
+    assert(remove_dup(l1) == [1,2,3,4,5,9,11,15])
+    assert(interation(l1,l2) ==[4,5])
+    assert(union(l1,l2) ==[1,2,3,4,5,6,7,8,9,11,15])
+    assert(remove_dup(l3) ==[])
+    assert(sorted(union(l3,l2)) == sorted(l2))
+    print("테스트 통과!")
+
+test_sets_operations_with_lists()
+
+'''
+assert는 뒤의 조건이 True가 아니면 AssertError를 발생한다.
+
+>>> a = 3
+>>> assert a == 2
+
+#결과
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AssertionError
+'''
+
+# 딕션 생성 방법
+#1
+tarantino = {}
+tarantino['name'] = "쿠엔틴 타란티노"
+tarantino['job'] =' 감독'
+tarantino
+
+#2
+sunnydale = dict({"name":"쿠엔틴 타란티노","job":"감독"})
+sunnydale
+
+#3
+sunnydale = dict(name="자일스",age =45, hobby = "음악감상") # 자동으로 문자열 전환
+sunnydale
+
+#4
+pairs = [("name","자일스"),("age",45),("hobby","음악감상")]
+sunnydale =dict(pairs)
+sunnydale
+'''
+for i in sunnydale:
+    print(i) # => 키만 뽑힘
+    print(sunnydale[i]) # =>값만 뽑힘
+'''
+
+dict([("name","자일스"),("age",45),("hobby","음악감상")])
+
+# set_default(key,default) -> 키가 없을 경우, 새 키와 기본 값 default 설정
+
+def usual_dict(dict_data):
+    new_data = {}
+    for k,v in dict_data:
+        if k in new_data:
+            new_data[k].append(v) # k라는 key에 v라는 value 넣기 
+        else:
+            new_data[k] = [v]
+    return new_data
+
+dict_data = (("key1","value1"),("key1","value2"),("key2","value3"),("key2","value4"),("key2","value5"))
+print(type(dict_data))
+
+usual_dict(dict_data)
